@@ -1,25 +1,39 @@
 import { NavLink, Link } from 'react-router-dom'
 import { useState } from 'react'
 
-const categories = [
-	{ name: 'Men', to: "/category/men's clothing" },
-	{ name: 'Women', to: "/category/women's clothing" },
-	{ name: 'Jewelery', to: '/category/jewelery' },
-	{ name: 'Electronics', to: '/category/electronics' },
-]
+import { CATEGORY_PRODUCTS } from './CategoryPage'
+
+const navigationItems = Object.entries(CATEGORY_PRODUCTS).map(([key, value]) => ({
+	param: key,
+	display: value.display,
+}))
+
+const allProductsItem = navigationItems.find(item => item.param === 'all')
+const otherCategories = navigationItems.filter(item => item.param !== 'all')
+const finalNavigationList = [allProductsItem, ...otherCategories]
 
 export default function MainNavigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 	const cartItemCount = 3
 
+	function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' 
+        })
+    }
+
 	function toggleMenu() {
 		setIsMenuOpen(prev => !prev)
 	}
 
 	function closeMenu() {
+		scrollToTop()
 		setIsMenuOpen(false)
 	}
+
+	const getCategoryLink = param => `/category/${param}`
 
 	const navLinkClasses = isActive =>
 		`px-3 py-2 rounded-md font-medium transition-all duration-300 text-base lg:text-lg ${
@@ -40,12 +54,9 @@ export default function MainNavigation() {
 					<NavLink onClick={closeMenu} to='/'>
 						Home
 					</NavLink>
-					<NavLink onClick={closeMenu} to='/all-products'>
-						All
-					</NavLink>
-					{categories.map(category => (
-						<NavLink onClick={closeMenu} key={category.name} to={category.to}>
-							{category.name}
+					{finalNavigationList.map(category => (
+						<NavLink onClick={closeMenu} key={category.param} to={getCategoryLink(category.param)}>
+							{category.display}
 						</NavLink>
 					))}
 				</div>
@@ -86,15 +97,16 @@ export default function MainNavigation() {
 
 				<div className='w-1/3 flex justify-end items-center z-50'>
 					<nav className='hidden lg:flex lg:items-center lg:space-x-4'>
-						<NavLink to='/' className={({ isActive }) => navLinkClasses(isActive)}>
+						<NavLink onClick={scrollToTop} to='/' className={({ isActive }) => navLinkClasses(isActive)}>
 							Home
 						</NavLink>
-						<NavLink to='/all-products' className={({ isActive }) => navLinkClasses(isActive)}>
-							All
-						</NavLink>
-						{categories.map(category => (
-							<NavLink key={category.name} to={category.to} className={({ isActive }) => navLinkClasses(isActive)}>
-								{category.name}
+						{finalNavigationList.map(category => (
+							<NavLink
+								key={category.param}
+								onClick={scrollToTop}
+								to={getCategoryLink(category.param)}
+								className={({ isActive }) => navLinkClasses(isActive)}>
+								{category.display}
 							</NavLink>
 						))}
 					</nav>
