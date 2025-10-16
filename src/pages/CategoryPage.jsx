@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
-import { useFetchProducts } from './useFetchProducts'
-import ProductCard from './ProductCard'
-import TrustSection from './TrustSection'
+import { useFetchProducts } from '../hook/useFetchProducts'
+import ProductCard from '../components/ProductCard'
+import TrustSection from '../components/TrustSection'
 
 const CATEGORY_PRODUCTS = {
 	all: { display: 'All ', apiName: null },

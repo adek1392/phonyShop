@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home'
-import CartPage from './pages/CartPage'
-import AllproductsPage from './pages/AllProductsPage'
-import CategoryPage from './components/CategoryPage'
+// import AllproductsPage from './pages/AllProductsPage'
+import CategoryPage from './pages/CategoryPage'
 import RootLayout from './pages/RootLayout'
+import CardDetails from './pages/CardDetails'
 
 const router = createBrowserRouter([
 	{
@@ -11,8 +11,7 @@ const router = createBrowserRouter([
 		element: <RootLayout />,
 		children: [
 			{ index: true, element: <Home /> },
-			{ path: 'all-products', element: <AllproductsPage /> },
-			{ path: 'cart', element: <CartPage /> },
+			{ path: 'product/:id', element: <CardDetails /> },
 			{ path: 'category/:name', element: <CategoryPage /> },
 		],
 	},

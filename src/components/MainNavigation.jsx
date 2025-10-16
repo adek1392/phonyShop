@@ -1,7 +1,7 @@
 import { NavLink, Link } from 'react-router-dom'
 import { useState } from 'react'
 
-import { CATEGORY_PRODUCTS } from './CategoryPage'
+import { CATEGORY_PRODUCTS } from '../pages/CategoryPage'
 
 const navigationItems = Object.entries(CATEGORY_PRODUCTS).map(([key, value]) => ({
 	param: key,
@@ -18,11 +18,11 @@ export default function MainNavigation() {
 	const cartItemCount = 3
 
 	function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' 
-        })
-    }
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth',
+		})
+	}
 
 	function toggleMenu() {
 		setIsMenuOpen(prev => !prev)

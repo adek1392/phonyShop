@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useFetchProducts } from '../components/useFetchProducts'
+import { useFetchProducts } from '../hook/useFetchProducts'
 import ProductCard from '../components/ProductCard'
 import TrustSection from '../components/TrustSection'
 
@@ -14,9 +14,11 @@ export default function Home() {
 	}
 
 	if (loading) {
-		;<div className='flex justify-center items-center h-screen'>
+		return(
+			<div className='flex justify-center items-center h-screen'>
 			<p className='text-center text-xl p-4 text-blue-600 animate-pulse'>Loading products...</p>
 		</div>
+		)
 	}
 	if (error) {
 		return (

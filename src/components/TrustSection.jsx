@@ -44,7 +44,7 @@ export default function TrustSection() {
 					<div className='md:w-[40%] lg:w-[30%] xl:w-[20%] '>
 						<form onSubmit={handleSubmit} className=' flex flex-col w-full gap-4  '>
 							<input
-								className='p-2  bg-white opacity-40 text-gray-900  rounded-2xl  focus:outline-none focus:ring-2 placeholder:text-black placeholder:text-sm placeholder:opacity-80  '
+								className='px-4 py-2  bg-white opacity-40 text-gray-900  rounded-2xl  focus:outline-none focus:ring-2 placeholder:text-black placeholder:text-sm placeholder:opacity-80  '
 								type='email'
 								id='email'
 								value={email}
