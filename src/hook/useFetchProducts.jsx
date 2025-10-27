@@ -5,7 +5,7 @@ export const useFetchProducts = (endpoint = '') => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     
-   
+   const safeEndpoint = (typeof endpoint === 'string' && endpoint.length > 0) ? endpoint : '';
     const apiUrl = `https://fakestoreapi.com/products${endpoint}`;
 
     useEffect(() => {

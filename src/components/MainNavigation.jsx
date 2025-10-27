@@ -1,5 +1,6 @@
 import { NavLink, Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { CartContext } from '../futures/CartContext'
 
 import { CATEGORY_PRODUCTS } from '../pages/CategoryPage'
 
@@ -13,9 +14,11 @@ const otherCategories = navigationItems.filter(item => item.param !== 'all')
 const finalNavigationList = [allProductsItem, ...otherCategories]
 
 export default function MainNavigation() {
+	const { cart } = useContext(CartContext)
+
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-	const cartItemCount = 3
+	const cartItemCount = cart.length
 
 	function scrollToTop() {
 		window.scrollTo({

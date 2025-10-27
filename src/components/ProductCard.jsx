@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import Button from './Button'
+import { CartContext } from '../futures/CartContext'
+import { useContext } from 'react'
 
 export default function ProductCard({ product }) {
 	const navigate = useNavigate()
@@ -11,8 +13,10 @@ export default function ProductCard({ product }) {
 	const handleBuyNow = (e) => {
 		e.stopPropagation()
 
-		console.log(`you buy product id: ${product.id}`);
+		dispatch({type:'Add', product: product})
 	}
+
+	const {dispatch} = useContext(CartContext)
 	return (
 		<>
 			<li
