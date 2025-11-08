@@ -1,43 +1,48 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 export const useFetchProducts = (endpoint = '') => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    
-   const safeEndpoint = (typeof endpoint === 'string' && endpoint.length > 0) ? endpoint : '';
-    const apiUrl = `https://fakestoreapi.com/products${endpoint}`;
+	const [products, setProducts] = useState([])
+	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState(null)
 
-    useEffect(() => {
-      
-        async function fetchProducts() {
-            setLoading(true);
-            setError(null);
+	const safeEndpoint = typeof endpoint === 'string' && endpoint.length > 0 ? endpoint : ''
+	const apiUrl = `https://fakestoreapi.com/products${safeEndpoint}`
 
-            try {
-                const response = await fetch(apiUrl);
+	useEffect(() => {
+		async function fetchProducts() {
+			setLoading(true)
+			setError(null)
+
+			try {
+				const response = await fetch(apiUrl)
+
+				if (!response.ok) {
+					throw new Error(`Response status: ${response.status}`)
+				}
+
+				const productData = await response.json()
+				
+
+				const normalizedData = Array.isArray(productData) ? productData : [productData]
+				setProducts(normalizedData)
+
+				normalizedData.forEach(item => {
+					if (item?.image) {
+						const img = new Image()
+						img.src = item.image
+					}
+				})
                 
-               
-                if (!response.ok) {
-                    throw new Error(`Response status: ${response.status}`);
-                }
+			} catch (err) {
+				console.error('Error loading products:', err.message)
+				setError('Failed to load data. Try refreshing the page.')
+			} finally {
+				setLoading(false)
+			}
+		}
 
-                const productData = await response.json();
-                setProducts(productData);
-            } catch (err) {
-                console.error("Error loading products:", err.message);
-                setError("Failed to load data. Try refreshing the page.");
-            } finally {
-                setLoading(false);
-            }
-        }
+		fetchProducts()
+	}, [apiUrl])
 
-        fetchProducts();
-        
-   
-    }, [endpoint]);
-
-    
-    return { products, loading, error };
-
+	return { products, loading, error }
 }

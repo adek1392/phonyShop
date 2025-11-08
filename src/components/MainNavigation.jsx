@@ -69,7 +69,7 @@ export default function MainNavigation() {
 
 			<div className='max-w-7xl mx-auto px-5 h-20 flex items-center justify-between'>
 				<div className='w-1/3 flex justify-start lg:hidden z-50'>
-					<button onClick={toggleMenu} className={iconBaseClasses}>
+					<button onClick={toggleMenu} className={iconBaseClasses} aria-label='hamburger'>
 						<svg
 							className={`absolute top-0 left-0 ${
 								isMenuOpen ? 'opacity-0' : 'opacity-100'
@@ -114,7 +114,7 @@ export default function MainNavigation() {
 						))}
 					</nav>
 
-					<NavLink
+					<NavLink aria-label='go to cart'
 						onClick={isMenuOpen ? toggleMenu : null}
 						to='/cart'
 						className={'p-2 relative ml-4 transition-colors duration-300'}>

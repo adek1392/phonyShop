@@ -1,7 +1,9 @@
-import { useRef } from 'react'
+import { lazy, Suspense, useRef } from 'react'
 import { useFetchProducts } from '../hook/useFetchProducts'
+import Fallback from '../components/Fallback'
 import ProductCard from '../components/ProductCard'
-import TrustSection from '../components/TrustSection'
+// const ProductCard = lazy(() => import('../components/ProductCard'))
+const TrustSection = lazy(() => import('../components/TrustSection'))
 
 export default function Home() {
 	const { products, loading, error } = useFetchProducts('?limit=6')
@@ -9,15 +11,18 @@ export default function Home() {
 
 	const scroll = scrollOffset => {
 		if (scrollContainerRef.current) {
-			scrollContainerRef.current.scrollLeft += scrollOffset
+			scrollContainerRef.current.scrollBy({
+				left: scrollOffset,
+				behavior: 'smooth',
+			})
 		}
 	}
 
 	if (loading) {
-		return(
+		return (
 			<div className='flex justify-center items-center h-screen'>
-			<p className='text-center text-xl p-4 text-blue-600 animate-pulse'>Loading products...</p>
-		</div>
+				<p className='text-center text-xl p-4 text-blue-600 animate-pulse'>Loading products...</p>
+			</div>
 		)
 	}
 	if (error) {
@@ -36,8 +41,17 @@ export default function Home() {
 
 	return (
 		<main>
-			<section className=" relative flex items-center justify-center  bg-[url('/img/shopping-small.jpg')] bg-cover bg-center   bg-no-repeat   h-70 z-10 sm:h-85 md:h-100 lg:bg-[url('/img/shopping-big.jpg')] xl:h-120 ">
-				<div className='absolute bg-black opacity-65 inset-0'></div>
+			<section className='relative flex items-center justify-center bg-cover bg-center bg-no-repeat h-70 z-10 sm:h-85 md:h-100 xl:h-120 overflow-hidden'>
+				<picture>
+					<source media='(min-width: 1024px)' srcSet='/img/shopping-big.jpg' />
+					<img
+						src='/img/shopping-small.jpg'
+						alt='Shopping background'
+						fetchPriority='high'
+						className='absolute inset-0 w-full h-full object-cover object-center z-10'
+					/>
+				</picture>
+				<div className='absolute bg-black opacity-65 inset-0 z-20'></div>
 				<h1 className={h1Classes}>Welcome in phonyShop !</h1>
 			</section>
 
@@ -62,13 +76,20 @@ export default function Home() {
 						</svg>
 					</button>
 
-					<ul
-						ref={scrollContainerRef}
-						className='flex overflow-x-scroll manual-scrollbar-hide space-x-8 pb-4 snap-x scroll-smooth  '>
-						{products.map(product => (
-							<ProductCard key={product.id} product={product} />
-						))}
-					</ul>
+					<Suspense fallback={<Fallback message='Loading products...' />}>
+						<ul
+							ref={scrollContainerRef}
+							className='flex overflow-x-scroll manual-scrollbar-hide space-x-8 pb-4 snap-x scroll-smooth'>
+							{loading
+								? Array.from({ length: 6 }).map((_, i) => (
+										<li
+											key={i}
+											className='flex-none w-[100%] sm:w-[45%] md:w-[40%] lg:w-[30%] xl:w-[20%] h-105 px-2 py-5 bg-gray-300 rounded-md animate-pulse'
+										/>
+								  ))
+								: products.map(product => <ProductCard key={product.id} product={product} />)}
+						</ul>
+					</Suspense>
 				</div>
 			</section>
 
@@ -107,7 +128,9 @@ export default function Home() {
 				</div>
 			</section>
 
-			<TrustSection />
+			<Suspense fallback={<Fallback message='Loading section...' />}>
+				<TrustSection />
+			</Suspense>
 		</main>
 	)
 }

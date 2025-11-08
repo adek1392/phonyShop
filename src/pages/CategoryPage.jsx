@@ -21,7 +21,7 @@ export default function CategoryPage() {
 	const { products, loading, error } = useFetchProducts(endpoint)
 
 	const h1Classes =
-		'text-center  text-3xl lg:text-4xl xl:text-5xl font-semibold mt-5 mb-5 pb-2 border-b-3 border-blue-800 w-1/2 lg:w-[30%]    '
+		'  text-center  text-3xl lg:text-4xl xl:text-5xl font-semibold mt-5 mb-5 pb-2 border-b-3 border-blue-800  lg:w-[30%]    '
 
 	if (endpoint === null) {
 		return (

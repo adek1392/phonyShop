@@ -1,11 +1,21 @@
 const CartReducer = (state, action) => {
 	switch (action.type) {
 		case 'Add':
-			const existingItem = state.find(item => item.id === action.product.id)
+			if (!action.payload || !action.payload.id) {
+				console.error("Cart Reducer Error: 'Add' action received without a valid payload/id.")
+				return state
+			}
+
+			const productToAdd = action.payload
+			const existingItem = state.find(item => item.id === productToAdd.id)
+
+			const quantityToAdd = productToAdd.quantity || 1
 			if (existingItem) {
-				return state.map(item => (item.id === action.product.id ? { ...item, quantity: item.quantity + 1 } : item))
+				return state.map(item =>
+					item.id === productToAdd.id ? { ...item, quantity: item.quantity + quantityToAdd } : item
+				)
 			} else {
-				return [...state, { ...action.product, quantity: 1 }]
+				return [...state, { ...productToAdd, quantity: quantityToAdd }]
 			}
 
 		case 'Remove':
@@ -25,7 +35,10 @@ const CartReducer = (state, action) => {
 					acc.push(item)
 				}
 				return acc
-			}, [])
+            }, [])
+        
+        case 'Clear':
+			return []
 
 		default:
 			return state

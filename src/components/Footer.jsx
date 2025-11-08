@@ -2,7 +2,7 @@
 
 export default function Footer() {
 	return (
-		<footer className='border-t-[1px] border-solid border-gray-300'>
+		<footer className='border-t-[1px] border-solid border-gray-200 inset-shadow-sm inset-shadow-gray-200'>
 			<div className='flex justify-between items-center px-5 h-20 lg:justify-evenly'>
 				<img className='w-16 h-16' src='/img/logo.png' alt='logo phonyShop' />
 
