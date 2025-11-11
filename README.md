@@ -6,7 +6,7 @@ A modern e-commerce demo website built with **React**, **Tailwind CSS**, and **R
 
 ## Live Demo
 
-[View the live demo on Vercel](phony-shop-djlccaaz2-adrians-projects-06f1dc67.vercel.app)
+[View the live demo on Vercel](https://phony-shop-djlccaaz2-adrians-projects-06f1dc67.vercel.app)
 
 ## Features
 
