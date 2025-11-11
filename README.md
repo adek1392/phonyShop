@@ -1,6 +1,6 @@
 # E-Commerce Demo
 
-A modern e-commerce demo website built with **React**, **Tailwind CSS**, and **React Router**, fetching products from [FakeStoreAPI](phony-shop-git-main-adrians-projects-06f1dc67.vercel.app).  
+A modern e-commerce demo website built with **React**, **Tailwind CSS**, and **React Router**, fetching products from [FakeStoreAPI](https://fakestoreapi.com/).  
 
 ---
 
