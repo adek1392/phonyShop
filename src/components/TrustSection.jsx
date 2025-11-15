@@ -1,9 +1,6 @@
 import { useState } from 'react'
 
-const validateEmail = email => {
-	const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-	return re.test(String(email).toLowerCase())
-}
+
 
 export default function TrustSection() {
 	const [email, setEmail] = useState('')
